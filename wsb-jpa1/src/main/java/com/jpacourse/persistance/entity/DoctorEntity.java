@@ -4,6 +4,9 @@ import com.jpacourse.persistance.enums.Specialization;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
+import java.util.List;
+
 @Entity
 @Table(name = "DOCTOR")
 public class DoctorEntity {
@@ -29,6 +32,19 @@ public class DoctorEntity {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Specialization specialization;
+
+	@OneToMany(mappedBy = "doctor")
+	private List<VisitEntity> visitEntities;
+
+	@ManyToMany
+	@JoinTable(
+			name = "DOCTOR_TO_ADDRESS",
+			joinColumns = @JoinColumn(name = "DoctoR_ID"),
+			inverseJoinColumns = @JoinColumn(name = "AddreSS_ID")
+	)
+	private Collection<AddressEntity> addressEntities;
+
+
 
 	public Long getId() {
 		return id;

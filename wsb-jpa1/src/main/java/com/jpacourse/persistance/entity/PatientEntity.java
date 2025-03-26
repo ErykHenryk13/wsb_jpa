@@ -31,8 +31,11 @@ public class PatientEntity {
 	private LocalDate dateOfBirth;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "Patieeeeent_ID")
+	@JoinColumn(name = "ADRES_PATIENT_ID")
 	private List<AddressEntity> addressEntities;
+
+	@OneToMany(mappedBy = "patient")
+	private List<VisitEntity> visitEntities;
 
 
 	public Long getId() {

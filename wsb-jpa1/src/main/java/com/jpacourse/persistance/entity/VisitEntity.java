@@ -1,8 +1,11 @@
 package com.jpacourse.persistance.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.*;
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 
 @Entity
 @Table(name = "VISIT")
@@ -16,6 +19,22 @@ public class VisitEntity {
 
 	@Column(nullable = false)
 	private LocalDateTime time;
+
+	@OneToOne(cascade = CascadeType.ALL,
+	fetch = FetchType.LAZY,
+	optional = false)
+	@JoinColumn(name="MEDICAL_TREATMENT_ID")
+	private MedicalTreatmentEntity medicalTreatment;
+
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="Patient_id")
+	private PatientEntity patient;
+
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="Doctor_id")
+	private DoctorEntity doctor;
 
 	public Long getId() {
 		return id;
