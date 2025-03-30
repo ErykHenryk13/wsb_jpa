@@ -22,9 +22,6 @@ public class AddressEntity {
 
 	private String postalCode;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="PATIENT_ID")
-	private PatientEntity patientEntity;
 
 	@ManyToMany(mappedBy = "addressEntities")
 	private Collection<DoctorEntity> doctorEntities;
