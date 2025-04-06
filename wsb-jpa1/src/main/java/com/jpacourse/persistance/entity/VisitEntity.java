@@ -1,11 +1,8 @@
 package com.jpacourse.persistance.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import jakarta.persistence.*;
-import org.hibernate.FetchMode;
-import org.hibernate.annotations.Fetch;
 
 @Entity
 @Table(name = "VISIT")
@@ -60,5 +57,7 @@ public class VisitEntity {
 	public void setTime(LocalDateTime time) {
 		this.time = time;
 	}
+
+	public LocalDateTime getVisitDate() {return time; }
 
 }

@@ -46,7 +46,6 @@ public class DoctorEntity {
 	private Collection<AddressEntity> addressEntities;
 
 
-
 	public Long getId() {
 		return id;
 	}
@@ -101,6 +100,9 @@ public class DoctorEntity {
 
 	public void setSpecialization(Specialization specialization) {
 		this.specialization = specialization;
+	}
+
+	public void setAddressEntity(AddressEntity addressEntity) {
 	}
 
 }

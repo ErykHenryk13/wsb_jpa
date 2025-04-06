@@ -4,7 +4,6 @@ package com.jpacourse.persistance.entity;
 import jakarta.persistence.*;
 
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "ADDRESS")
