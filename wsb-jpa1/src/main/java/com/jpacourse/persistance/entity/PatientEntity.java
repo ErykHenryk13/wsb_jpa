@@ -1,12 +1,11 @@
 package com.jpacourse.persistance.entity;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
-
-import jakarta.persistence.*;
+import java.util.Collection;
 
 @Entity
-@Table(name = "PATIENT")
+@Table(name = "patient")
 public class PatientEntity {
 
 	@Id
@@ -22,7 +21,6 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private String telephoneNumber;
 
-	@Column(nullable = false)
 	private String email;
 
 	@Column(nullable = false)
@@ -31,13 +29,29 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "PATIENT_ID")
-	private List<AddressEntity> addressEntities;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "address_id")
+	private AddressEntity address;
 
-	@OneToMany(mappedBy = "patient")
-	private List<VisitEntity> visitEntities;
+	@OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	private Collection<VisitEntity> visits;
 
+	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean isAllergic;
+
+	public PatientEntity() {
+	}
+
+	public PatientEntity(String firstName, String lastName, String telephoneNumber, String email, String patientNumber, LocalDate dateOfBirth, AddressEntity address, Boolean isAllergic) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.telephoneNumber = telephoneNumber;
+		this.email = email;
+		this.patientNumber = patientNumber;
+		this.dateOfBirth = dateOfBirth;
+		this.address = address;
+		this.isAllergic = isAllergic;
+	}
 
 	public Long getId() {
 		return id;
@@ -95,4 +109,37 @@ public class PatientEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public Collection<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(Collection<VisitEntity> visits) {
+		this.visits = visits;
+	}
+
+	public void addVisit(VisitEntity visit) {
+		visits.add(visit);
+		visit.setPatient(this);
+	}
+
+	public void removeVisit(VisitEntity visit) {
+		visits.remove(visit);
+		visit.setPatient(null);
+	}
+
+	public Boolean getIsAllergic() {
+		return isAllergic;
+	}
+
+	public void setIsAllergic(Boolean isAllergic) {
+		this.isAllergic = isAllergic;
+	}
 }

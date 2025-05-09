@@ -1,12 +1,10 @@
 package com.jpacourse.persistance.entity;
 
 
-import jakarta.persistence.*;
-
-import java.util.Collection;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "ADDRESS")
+@Table(name = "address")
 public class AddressEntity {
 
 	@Id
@@ -19,15 +17,21 @@ public class AddressEntity {
 	@Column(nullable = false)
 	private String addressLine1;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String addressLine2;
 
 	@Column(nullable = false)
 	private String postalCode;
 
+	public AddressEntity() {
+	}
 
-	@ManyToMany(mappedBy = "addressEntities")
-	private Collection<DoctorEntity> doctorEntities;
+	public AddressEntity(String city, String addressLine1, String addressLine2, String postalCode) {
+		this.city = city;
+		this.addressLine1 = addressLine1;
+		this.addressLine2 = addressLine2;
+		this.postalCode = postalCode;
+	}
 
 	public Long getId() {
 		return id;
@@ -68,5 +72,4 @@ public class AddressEntity {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-
 }

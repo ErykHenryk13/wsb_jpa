@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AddressServiceImpl implements AddressService
 {
-    private final AddressDao addressDao;            //wywołuje objekt dostępu do danych
+    private final AddressDao addressDao;
 
     @Autowired
     public AddressServiceImpl(AddressDao pAddressDao)
@@ -24,7 +24,7 @@ public class AddressServiceImpl implements AddressService
 
     @Override
     public AddressTO findById(Long id) {
-        final AddressEntity entity = addressDao.findOne(id);  //tutaj mamy dostęp do bazy
+        final AddressEntity entity = addressDao.findOne(id);
         return AddressMapper.mapToTO(entity);
     }
 }

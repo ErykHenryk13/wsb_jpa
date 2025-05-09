@@ -1,12 +1,20 @@
 package com.jpacourse.persistance.dao;
 
 import com.jpacourse.persistance.entity.PatientEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.jpacourse.persistance.entity.VisitEntity;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Collection;
 
-public interface PatientDao extends JpaRepository<PatientEntity, Long>
-{
+public interface PatientDao extends Dao<PatientEntity, Long> {
+    PatientEntity findPatientById(Long patientId);
 
-    List<PatientEntity> findByLastName(String lastName);
+    Collection<PatientEntity> findPatientsByLastName(String lastName);
+    Collection<PatientEntity> findPatientsWithVisitsCountGreaterThan(int visitsCount);
+    Collection<PatientEntity> findPatientsByAllergicStatus(Boolean isAllergic);
+
+    PatientEntity saveOrUpdate(PatientEntity patientEntity);
+    void deletePatientById(Long patientId);
+
+    VisitEntity addVisitToPatient(Long patientId, Long doctorId, String description, LocalDateTime time);
 }

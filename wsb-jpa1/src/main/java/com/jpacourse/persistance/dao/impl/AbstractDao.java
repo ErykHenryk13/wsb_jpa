@@ -1,18 +1,15 @@
 package com.jpacourse.persistance.dao.impl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import com.jpacourse.persistance.dao.Dao;
+import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-
-
-import com.jpacourse.persistance.dao.Dao;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import org.springframework.transaction.annotation.Transactional;
-
 
 @Transactional
 public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K> {
@@ -64,7 +61,7 @@ public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K
 
 	@Override
 	public void deleteAll() {
-		entityManager.createQuery("delete " + getDomainClassName()).executeUpdate();
+		entityManager.createQuery("delete from " + getDomainClassName()).executeUpdate();
 	}
 
 	@Override
@@ -77,16 +74,19 @@ public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K
 		return findOne(id) != null;
 	}
 
+
 	@SuppressWarnings("unchecked")
 	protected Class<T> getDomainClass() {
 		if (domainClass == null) {
-			ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-			domainClass = (Class<T>) type.getActualTypeArguments()[0];
+			domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+					.getActualTypeArguments()[0];
 		}
 		return domainClass;
 	}
 
 	protected String getDomainClassName() {
-		return getDomainClass().getName();
+		return getDomainClass().getSimpleName();
+
 	}
 }
+

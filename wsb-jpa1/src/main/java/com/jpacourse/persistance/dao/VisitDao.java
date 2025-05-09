@@ -1,10 +1,10 @@
 package com.jpacourse.persistance.dao;
 
 import com.jpacourse.persistance.entity.VisitEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Collection;
 
-public interface VisitDao extends JpaRepository<VisitEntity, Long> {
-    List<VisitEntity> findByPatientId(Long patientId);
+public interface VisitDao extends Dao<VisitEntity, Long>
+{
+    Collection<VisitEntity> findByPatient(Long patientId);
 }

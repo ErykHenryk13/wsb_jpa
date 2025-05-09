@@ -1,22 +1,12 @@
 package com.jpacourse.service;
 
-import com.jpacourse.persistance.dao.VisitDao;
-import com.jpacourse.persistance.entity.VisitEntity;
-import org.springframework.stereotype.Service;
+import com.jpacourse.dto.VisitTO;
 
-import java.util.List;
+import java.util.Collection;
 
-@Service
-public class VisitService {
+public interface VisitService
+{
+    VisitTO findById(final Long id);
 
-    private final VisitDao visitDao;
-
-    public VisitService(VisitDao visitDao) {
-        this.visitDao = visitDao;
-    }
-
-    public List<VisitEntity> findVisitsByPatientId(Long patientId) {
-        return visitDao.findByPatientId(patientId);
-    }
-
+    public Collection<VisitTO> findAllByPatientId(final Long patientId);
 }
